@@ -1,0 +1,109 @@
+﻿<Window x:Class="WorkOrder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkOrder" xmlns:viewmodel="clr-namespace:WorkOrder.ViewModel"  
+        mc:Ignorable="d"
+        WindowStyle="None" 
+        Height="350" Width="660"  
+        WindowStartupLocation="CenterScreen" 
+        DataContext="{Binding Source={StaticResource locator},Path=mv}"
+        ShowInTaskbar="True"    MouseMove="Window_MouseMove" AllowsTransparency="True">
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Window">
+                        <Border Background="White" CornerRadius="12" Opacity="0.98" BorderBrush="#c444"  BorderThickness="1" Margin="1,1">
+                            <ContentPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Style>
+ 
+ 
+
+    <Grid  Margin="2,2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" ></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"  >
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                <Button  Width="40"  Content="─" Height="30" Click="MinClick"  Margin="0 0 0 0" Foreground="Black" BorderThickness="0" Background="Transparent" />
+                <Button  Width="40"  Content="✕" Height="30" Click="CloseClick"   Margin="0 0 10 0" Foreground="Black" BorderThickness="0" Background="Transparent" />
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="3*"  ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock FontSize="22" Margin="0 35 0 0" HorizontalAlignment="Center">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="Red" Offset="0.0"/>
+                            <GradientStop Color="Blue" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+            欢迎使用
+                </TextBlock>
+                <TextBlock Text="&#xf23c;"    FontFamily="{StaticResource IconFont}"    FontSize="120" Margin="10 50 10 0"  Foreground="LightGoldenrodYellow"></TextBlock>
+                
+            </StackPanel>
+
+            <Border Grid.Column="1" BorderBrush="#c0c0c0" BorderThickness="0.1 0 0 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin=" 20 40 0 0" Grid.Row="0">
+                        <WrapPanel>
+                            <Button   Cursor="Hand" Name="BtnRegister" Width="180"  
+                                      Background="#1e90ff" Foreground="White" BorderThickness="0"
+                                      Height="35"   
+                                      Command="{Binding ImportExcelCommand}" 
+                                      CommandParameter="{Binding Path=.,RelativeSource={RelativeSource AncestorType=Window}}"  
+                                      FontSize="18"  Margin="0 0 0 0" >
+
+                                <TextBlock Text="&#xf115;  导入工单"   FontFamily="{StaticResource IconFont}"   FontSize="20"/>
+                            </Button>
+                            <Button   Cursor="Hand"   
+                                      Margin="25 0 10 0 " Width="200"  
+                                      Background="Orange" Foreground="White" 
+                                      BorderThickness="0"  Height="35"  
+                                      Command="{Binding CheckExcelCommand}" 
+                                      IsEnabled="{Binding checkNgBtn}"
+                                      CommandParameter="{Binding Path=.,RelativeSource={RelativeSource AncestorType=Window}}"  
+                                      FontSize="18"  >
+
+                                <TextBlock Text="&#xf235;  查看不通过结果"   FontFamily="{StaticResource IconFont}"   FontSize="20"/>
+                            </Button>
+
+                        </WrapPanel>
+ 
+                    </StackPanel>
+                    <StackPanel  Margin=" 10 30 0 0" Grid.Row="1">
+                        <ProgressBar x:Name="progressBar" Value="0" Minimum="0" Maximum="100"  Height="3" Margin="20 0 20 15" IsIndeterminate="True" Visibility="{Binding progreState}" Background="Aqua"></ProgressBar>
+                        <TextBlock  FontStretch="Condensed" Text="{Binding  showMsg}"  TextWrapping="WrapWithOverflow" FontSize="18"></TextBlock>
+
+
+                    </StackPanel>
+
+               
+                </Grid>
+
+
+            </Border>
+        </Grid>
+
+    </Grid>
+</Window>
